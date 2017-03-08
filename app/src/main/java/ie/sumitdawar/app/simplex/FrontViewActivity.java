@@ -1,11 +1,12 @@
 package ie.sumitdawar.app.simplex;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class FrontViewActivity extends AppCompatActivity {
 
@@ -15,6 +16,7 @@ public class FrontViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_front_view);
         final Button bRegister = (Button) findViewById(R.id.bRegisterNew);
         final Button bLogin = (Button) findViewById(R.id.bLogin);
+        final TextView tvExchangeRate = (TextView) findViewById(R.id.tvExchangeRate);
 
         bRegister.setOnClickListener(new View.OnClickListener() {
             @Override
