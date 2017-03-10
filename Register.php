@@ -1,7 +1,13 @@
 <?php
-    require("password.php");
-    $connect = mysqli_connect("my_host", "my_user", "my_password", "my_database");
 
+    $response = array();
+    $response["success"] = false;
+    $connect = mysqli_connect("localhost", "id1004610_simplexudb", "SimplexUDB@123", "id1004610_usersdb");
+/* check connection */
+if (!$connect ) {
+    printf("Connect failed: %s\n", mysqli_connect_error());
+    exit();
+}
     $full_name = $_POST["full_name"];
     $email = $_POST["email"];
     $username = $_POST["username"];
@@ -10,16 +16,16 @@
     $phone = $_POST["phone"];
 
      function registerUser() {
-        global $connect, $name, $age, $username, $password;
-        $passwordHash = password_hash($password, PASSWORD_DEFAULT);
-        $statement = mysqli_prepare($connect, "INSERT INTO user (full_name, email, username, password, country, phone) VALUES (?,?, ?, ?, ?, ?)");
-        mysqli_stmt_bind_param($statement, "ssssss", $full_name, $email, $username, $passwordHash, $country, $phone);
+        global $connect, $full_name, $email, $username, $password, $country, $phone;
+
+        $statement = mysqli_prepare($connect, "INSERT INTO user_data (full_name, email, username, password, country, phone) VALUES (?,?, ?, ?, ?, ?)");
+        mysqli_stmt_bind_param($statement, "ssssss", $full_name, $email, $username, $password, $country, $phone);
         mysqli_stmt_execute($statement);
         mysqli_stmt_close($statement);
     }
     function usernameAvailable() {
         global $connect, $username;
-        $statement = mysqli_prepare($connect, "SELECT * FROM user WHERE username = ?");
+        $statement = mysqli_prepare($connect, "SELECT * FROM user_data WHERE username = ?");
         mysqli_stmt_bind_param($statement, "s", $username);
         mysqli_stmt_execute($statement);
         mysqli_stmt_store_result($statement);
@@ -31,8 +37,7 @@
             return false;
         }
     }
-    $response = array();
-    $response["success"] = false;
+
     if (usernameAvailable()){
         registerUser();
         $response["success"] = true;
