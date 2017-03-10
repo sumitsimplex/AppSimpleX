@@ -1,6 +1,6 @@
 <?php
       $amount = urldecode($_GET["amount"]);
-      $from = "EUR";
+      $from = urldecode($_GET["from"]);
       $to = "INR";
       $data = file_get_contents("https://www.google.com/finance/converter?a=$amount&from=$from&to=$to");
   	preg_match("/<span class=bld>(.*)<\/span>/",$data, $converted);
