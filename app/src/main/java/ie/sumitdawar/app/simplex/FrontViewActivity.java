@@ -25,12 +25,15 @@ public class FrontViewActivity extends AppCompatActivity {
         final Button bRegister = (Button) findViewById(R.id.bRegisterNew);
         final Button bLogin = (Button) findViewById(R.id.bLogin);
         final TextView tvExchangeRate = (TextView) findViewById(R.id.tvExchangeRate);
+        
+
+
         Response.Listener<String> responseListener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
                     JSONObject jsonResponse = new JSONObject(response);
-                    String conversionAmount = jsonResponse.get("conversion");
+                    String conversionAmount = (String) jsonResponse.get("conversion");
                     tvExchangeRate.setText(conversionAmount);
                 } catch (JSONException e) {
                     e.printStackTrace();
